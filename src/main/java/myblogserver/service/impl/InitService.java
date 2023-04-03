@@ -34,11 +34,9 @@ public class InitService {
                 .flatMap(r -> {
                     String number = "20021228";
                     String password = "021228xinrui..";
-                    String nickName = "Xinrui";
                     User admin = User.builder()
                             .number(number)
                             .password(encoder.encode(password))
-                            .nickName(nickName)
                             .insertTime(LocalDateTime.now())
                             .build();
                     return userRepository.save(admin).then();

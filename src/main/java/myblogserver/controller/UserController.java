@@ -25,14 +25,14 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
-    Mono<ResultVO> login (@RequestBody User user, ServerHttpResponse response) {
-        return userService.getUser(user.getNumber())
-                .filter(u -> passwordEncoder.matches(u.getPassword(), user.getPassword()))
+    public Mono<ResultVO> login (@RequestBody User user, ServerHttpResponse response) {
+        return userService.getUserByNumber(user.getNumber())
+                .filter(u -> passwordEncoder.matches(user.getPassword(), u.getPassword()))
                 .map(u -> {
                     String jwt = JwtUtil.createJWT(Map.of("uid", u.getId()));
                     response.getHeaders().add("token", jwt);
 
-                    return ResultVO.success();
+                    return ResultVO.success(Map.of());
                 })
                 .defaultIfEmpty(ResultVO.error(ResultVO.UNAUTHORIZED, "用户名密码不匹配！"));
     }

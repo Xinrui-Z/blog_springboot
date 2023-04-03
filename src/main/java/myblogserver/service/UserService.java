@@ -5,5 +5,5 @@ import reactor.core.publisher.Mono;
 
 public interface UserService {
 
-    public Mono<User> getUser(String number);
+    public Mono<User> getUserByNumber(String number);
 }

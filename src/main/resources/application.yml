@@ -2,7 +2,7 @@ server:
   port: 80
 spring:
   r2dbc:
-    url: 'r2dbc:mysql://122.9.33.79:8080/myblog'
+    url: 'r2dbc:mysql://122.9.33.79:3307/myblog'
     username: root
     password: 1157
     pool:
