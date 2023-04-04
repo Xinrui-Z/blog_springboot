@@ -9,25 +9,20 @@ import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Article {
+public class ArticleTags {
 
     @Id
     @CreatedBy
     private Long id;
 
-    private String articleLabel;
+    private String tagName;
 
-    private String articleTitle;
-
-    private String articleImg;
-
-    private String articleAbstract;
-
-    private String articleContent;
+    private String tagValue;
 
     private LocalDateTime insertTime;
 

@@ -1,5 +1,5 @@
 server:
-  port: 80
+  port: 8081
 spring:
   r2dbc:
     url: 'r2dbc:mysql://122.9.33.79:3307/myblog'

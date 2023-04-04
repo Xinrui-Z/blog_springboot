@@ -41,7 +41,6 @@ public class LoginCheckFilter implements WebFilter {
             try {
                 Claims claims = JwtUtil.parseJWT(token);
                 String uid = claims.getId();
-                String role = claims.getSubject();
                 exchange.getAttributes().put("uid", uid);
             } catch (Exception e) {
                 throw new RuntimeException(e);
