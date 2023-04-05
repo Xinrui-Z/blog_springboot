@@ -17,12 +17,13 @@ create table if not exists user
 create table if not exists article
 (
     id bigint(19) not null primary key,
-    article_label varchar(40),
-    article_title varchar(200),
-    article_img varchar(200),
-    article_abstract varchar(200),
-    article_content varchar(1000),
+    label varchar(40),
+    label_count int,
+    title varchar(200),
+    img_url varchar(200),
+    digest varchar(200),
+    content varchar(1000),
     insert_time datetime not null default current_timestamp,
     update_time datetime default current_timestamp,
-    index (article_label)
+    index (label)
 );

@@ -42,7 +42,7 @@ public class UserController {
                 .flatMap(user -> Mono.just(ResultVO.success(Map.of("user",user))));
     }
 
-    @PutMapping("/nickAndSign/{nickName}/{sign}")
+    @PutMapping("/info/{nickName}/{sign}")
     public Mono<ResultVO> resetNickNameAndSign(@PathVariable String nickName, @PathVariable String sign, @RequestAttribute("uid") long uid) {
         return userService.resetNickAndSign(nickName, sign, uid)
                 .then(Mono.just(ResultVO.success("修改成功！")));

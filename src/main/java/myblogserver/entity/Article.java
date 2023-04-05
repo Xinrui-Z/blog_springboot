@@ -1,5 +1,6 @@
 package myblogserver.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,17 +20,20 @@ public class Article {
     @CreatedBy
     private Long id;
 
-    private String articleLabel;
+    private String label;
 
-    private String articleTitle;
+    private int labelCount;
 
-    private String articleImg;
+    private String title;
 
-    private String articleAbstract;
+    private String imgUrl;
 
-    private String articleContent;
+    private String digest;
+
+    private String content;
 
     private LocalDateTime insertTime;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
     private LocalDateTime updateTime;
 }
