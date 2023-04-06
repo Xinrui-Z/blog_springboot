@@ -35,6 +35,10 @@ public class ArticleService {
         return articleRepository.findAll(page, pageSize).collectList();
     }
 
+    public Mono<Integer> getArticlesCount() {
+        return articleRepository.findCount();
+    }
+
     public Mono<Void> resetArticle(Article article) {
         return articleRepository.updateArticleById(article.getLabel(), article.getTitle(), article.getImgUrl(), article.getDigest(), article.getContent(), article.getId())
                 .filter(u -> u != 0)

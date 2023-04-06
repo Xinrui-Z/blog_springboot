@@ -20,8 +20,11 @@ public interface ArticleRepository extends ReactiveCrudRepository<Article, Long>
 
     Mono<Integer> deleteById(long aid);
 
-    @Query("select * from article order by update_time desc limit :page,:pageSize")
+    @Query("select SQL_CALC_FOUND_ROWS * from article order by update_time desc limit :page,:pageSize")
     Flux<Article> findAll(int page, int pageSize);
+
+    @Query("select count(*) from article ")
+    Mono<Integer> findCount();
 
     @Modifying
     @Query("update article a set a.label=:label, a.title=:title, a.img_url=:imgUrl, " +
@@ -32,7 +35,6 @@ public interface ArticleRepository extends ReactiveCrudRepository<Article, Long>
     @Query("update article a set a.label_count=:count where a.label=:label")
     Mono<Integer> updateLabelCountByLabel(String label, int count);
 
-    @Modifying
     @Query("select count(*) from article a where a.label=:label")
     Mono<Integer> findCountByLabel(String label);
 
