@@ -30,6 +30,10 @@ public class User {
 
     private String avatarUrl;
 
+    private String email;
+
+    private String github;
+
     private String sign;
 
     private LocalDateTime insertTime;

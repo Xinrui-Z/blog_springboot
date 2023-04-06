@@ -1,4 +1,4 @@
-package myblogserver.service.impl;
+package myblogserver.service;
 
 import lombok.extern.slf4j.Slf4j;
 import myblogserver.entity.User;
@@ -12,10 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
-
-/**
- * 初始化
- */
 
 @Service
 @Slf4j

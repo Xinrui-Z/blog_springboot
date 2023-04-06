@@ -1,18 +1,52 @@
 package myblogserver.service;
 
 import myblogserver.entity.Article;
-import reactor.core.publisher.Flux;
+import myblogserver.exception.XException;
+import myblogserver.repository.ArticleRepository;
+import myblogserver.utils.ResultVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-public interface ArticleService {
+@Service
+public class ArticleService {
 
-    public Mono<Article> addArticle(Article article);
+    @Autowired
+    private ArticleRepository articleRepository;
 
-    public Mono<List<Article>> listArticles();
+    public Mono<Article> addArticle(Article article) {
+        Mono<Article> articleM = articleRepository.findFirstByLabel(article.getLabel());
+       return articleRepository.findCountByLabel(article.getLabel())
+               .filter(r -> r != 0)
+               .flatMap(r -> articleM.flatMap(a -> articleRepository.updateLabelCountByLabel(article.getLabel(), a.getLabelCount()+1)))
+               .flatMap(r -> articleM.flatMap(a -> {
+                   article.setLabelCount(a.getLabelCount());
+                   return articleRepository.save(article);
+               }))
+               .switchIfEmpty(articleRepository.save(article));
+    }
 
-    public Mono<Void> resetArticle(Article article);
+    public Mono<List<Article>> listArticles(int page, int pageSize) {
+        return articleRepository.findAll(page, pageSize).collectList();
+    }
 
-    public Mono<Article> getArticle(long aid);
+    public Mono<Void> resetArticle(Article article) {
+        return articleRepository.updateArticleById(article.getLabel(), article.getTitle(), article.getImgUrl(), article.getDigest(), article.getContent(), article.getId())
+                .filter(u -> u != 0)
+                .switchIfEmpty(Mono.error(new XException(ResultVO.BAD_REQUEST, "修改失败，请稍后再试")))
+                .then();
+    }
+
+    public Mono<Article> getArticle(long aid) {
+        return articleRepository.findById(aid);
+    }
+
+    public Mono<Void> deleteArticle(long aid) {
+        return articleRepository.deleteById(aid).then();
+    }
 }

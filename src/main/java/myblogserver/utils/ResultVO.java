@@ -15,8 +15,6 @@ public class ResultVO {
 
     public static final int UNAUTHORIZED = 401;
 
-    public static final int CONFLICT = 409;
-
     private Integer code;
 
     private String message;

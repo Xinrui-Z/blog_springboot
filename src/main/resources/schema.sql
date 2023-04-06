@@ -7,6 +7,8 @@ create table if not exists user
     password varchar(65) not null,
     nick_name varchar(65) ,
     avatar_url varchar(200),
+    email varchar(80),
+    github varchar(80),
     sign varchar(200),
     insert_time datetime not null default current_timestamp,
     update_time datetime default current_timestamp,

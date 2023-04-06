@@ -22,16 +22,21 @@ public class LoginCheckFilter implements WebFilter {
     public static final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
 
     String[] urls = new String[] {
-            "/api/login"
+            "/api/admin/login",
+            "/api/info",
+            "/api/articles/"
     };
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
+        String path = request.getPath().pathWithinApplication().value();
 
         for (String url : urls) {
-            boolean match = PATH_MATCHER.match(url, request.getPath().pathWithinApplication().value());
+            boolean match = PATH_MATCHER.match(url, path);
             if(match) {
+                return chain.filter(exchange);
+            } else if (path.contains("/api/front")) {
                 return chain.filter(exchange);
             }
         }

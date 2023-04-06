@@ -13,9 +13,9 @@ import reactor.core.publisher.Mono;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/admin")
 @CrossOrigin
-public class UserController {
+public class AdminController {
 
     @Autowired
     private UserService userService;
@@ -42,14 +42,14 @@ public class UserController {
                 .flatMap(user -> Mono.just(ResultVO.success(Map.of("user",user))));
     }
 
-    @PutMapping("/info/{nickName}/{sign}")
-    public Mono<ResultVO> resetNickNameAndSign(@PathVariable String nickName, @PathVariable String sign, @RequestAttribute("uid") long uid) {
-        return userService.resetNickAndSign(nickName, sign, uid)
+    @PostMapping("/info")
+    public Mono<ResultVO> postInfo(@RequestBody User user,@RequestAttribute("uid") long uid) {
+        return userService.resetInfo(user, uid)
                 .then(Mono.just(ResultVO.success("修改成功！")));
     }
 
     @PutMapping("/password/{pwd}")
-    public Mono<ResultVO> resetPwd(@PathVariable String pwd, @RequestAttribute("uid") long uid) {
+    public Mono<ResultVO> putPassword(@PathVariable String pwd, @RequestAttribute("uid") long uid) {
         return userService.resetPassword(pwd, uid)
                 .then(Mono.just(ResultVO.success("修改成功！")));
     }
