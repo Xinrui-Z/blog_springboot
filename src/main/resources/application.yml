@@ -11,5 +11,9 @@ spring:
       validation-query: select 1
       max-life-time: 10000
 
+
   jackson:
     default-property-inclusion: non_null
+  webflux:
+    multipart:
+      max-headers-size: 100MB

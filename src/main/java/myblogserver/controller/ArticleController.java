@@ -1,11 +1,11 @@
 package myblogserver.controller;
 
-import com.alibaba.fastjson.JSON;
 import myblogserver.entity.Article;
 import myblogserver.service.ArticleService;
 import myblogserver.utils.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
@@ -31,17 +31,6 @@ public class ArticleController {
                 .then(Mono.just(ResultVO.success("添加成功！")));
     }
 
-    /**
-     * 获取博客列表
-     * @return
-     */
-    /*
-    @GetMapping("/articles/{page}/{pageSize}")
-    public Mono<ResultVO> getArticleList(@PathVariable int page, @PathVariable int pageSize) {
-        return articleService.listArticles(page, pageSize)
-                .map(articles -> ResultVO.success(Map.of("articles", articles)));
-    }
-    */
     /**
      * 修改博客
      * @param article
@@ -74,5 +63,6 @@ public class ArticleController {
         return articleService.deleteArticle(aid)
                 .then(Mono.just(ResultVO.success("删除成功！")));
     }
+
 
 }

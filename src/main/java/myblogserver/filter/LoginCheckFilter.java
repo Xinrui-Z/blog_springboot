@@ -23,8 +23,6 @@ public class LoginCheckFilter implements WebFilter {
 
     String[] urls = new String[] {
             "/api/admin/login",
-            "/api/info",
-            "/api/articles/"
     };
 
     @Override

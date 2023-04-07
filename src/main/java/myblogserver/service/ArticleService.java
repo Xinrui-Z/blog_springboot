@@ -53,4 +53,8 @@ public class ArticleService {
     public Mono<Void> deleteArticle(long aid) {
         return articleRepository.deleteById(aid).then();
     }
+
+    public Mono<List<Article>> getLabelsAndCount() {
+        return articleRepository.findLabelsAndCount().collectList();
+    }
 }

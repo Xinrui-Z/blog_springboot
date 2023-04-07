@@ -37,4 +37,10 @@ public class FrontController {
                 ResultVO.success(Map.of("articles",articles, "total",total)))
         );
     }
+
+    @GetMapping("/labels")
+    public Mono<ResultVO> getLabelsAndCount() {
+        return articleService.getLabelsAndCount()
+                .flatMap(articles -> Mono.just(ResultVO.success(Map.of("articles",articles))));
+    }
 }
