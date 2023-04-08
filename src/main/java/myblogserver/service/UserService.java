@@ -34,7 +34,7 @@ public class UserService  {
     }
 
     public Mono<Void> resetInfo(User user, long uid) {
-        return userRepository.updateInfo(user.getNickName(), user.getSign(),user.getEmail(), user.getGithub(), uid)
+        return userRepository.updateInfo(user.getAvatarUrl(),user.getNickName(), user.getSign(),user.getEmail(), user.getGithub(), uid)
                 .filter(u -> u != 0)
                 .switchIfEmpty(Mono.error(new XException(ResultVO.BAD_REQUEST, "修改失败，请稍后再试")))
                 .then();

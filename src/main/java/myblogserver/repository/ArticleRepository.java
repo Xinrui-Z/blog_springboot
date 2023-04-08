@@ -1,6 +1,7 @@
 package myblogserver.repository;
 
 import myblogserver.entity.Article;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.r2dbc.repository.Modifying;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
@@ -20,8 +21,9 @@ public interface ArticleRepository extends ReactiveCrudRepository<Article, Long>
 
     Mono<Integer> deleteById(long aid);
 
-    @Query("select * from article order by update_time desc limit :page,:pageSize")
-    Flux<Article> findAll(int page, int pageSize);
+    @Query("select * from article order by id desc limit :pageSize offset :offset")
+    Flux<Article> findAll(int offset, int pageSize);
+
 
     @Query("select count(*) from article ")
     Mono<Integer> findCount();

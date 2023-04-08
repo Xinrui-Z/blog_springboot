@@ -18,6 +18,7 @@ public class Article {
 
     @Id
     @CreatedBy
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long id;
 
     private String label;

@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class ArticleService {
     }
 
     public Mono<List<Article>> listArticles(int page, int pageSize) {
-        return articleRepository.findAll(page, pageSize).collectList();
+        return articleRepository.findAll((page-1)*pageSize, pageSize).collectList();
     }
 
     public Mono<Integer> getArticlesCount() {
@@ -50,8 +51,12 @@ public class ArticleService {
         return articleRepository.findById(aid);
     }
 
+    @Transactional
     public Mono<Void> deleteArticle(long aid) {
-        return articleRepository.deleteById(aid).then();
+        Mono<Article> articleM = articleRepository.findById(aid);
+        return articleM.flatMap(article -> articleRepository.updateLabelCountByLabel(
+                article.getLabel(), article.getLabelCount()-1
+        )).then(articleRepository.deleteById(aid).then());
     }
 
     public Mono<List<Article>> getLabelsAndCount() {

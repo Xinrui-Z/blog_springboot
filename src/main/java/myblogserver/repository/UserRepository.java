@@ -19,8 +19,8 @@ public interface UserRepository extends ReactiveCrudRepository<User, Long> {
     Mono<User> findById(long id);
 
     @Modifying
-    @Query("update user u set u.nick_name=:nickName, u.sign=:sign, u.email=:email, u.github=:github where u.id=:uid")
-    Mono<Integer> updateInfo(String nickName,String sign,String email, String github, long uid);
+    @Query("update user u set u.avatar_url = :avatarUrl, u.nick_name=:nickName, u.sign=:sign, u.email=:email, u.github=:github where u.id=:uid")
+    Mono<Integer> updateInfo(String avatarUrl,String nickName,String sign,String email, String github, long uid);
 
     @Modifying
     @Query("update user u set u.password=:password where u.id=:uid")
