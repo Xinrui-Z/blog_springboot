@@ -17,6 +17,8 @@ public interface ArticleRepository extends ReactiveCrudRepository<Article, Long>
 
     Mono<Article> findById(long aid);
 
+    Flux<Article> findByLabel(String label);
+
     Mono<Article> findFirstByLabel(String label);
 
     Mono<Integer> deleteById(long aid);

@@ -1,8 +1,11 @@
 server:
-  port: 8081
+  port: 8855
 spring:
+  sql:
+    init:
+      mode: always
   r2dbc:
-    url: 'r2dbc:mysql://122.9.33.79:3307/myblog'
+    url: 'r2dbcs:mysql://122.9.33.79:3307/myblog'
     username: root
     password: 1157
     pool:
@@ -11,9 +14,19 @@ spring:
       validation-query: select 1
       max-life-time: 10000
 
-
   jackson:
     default-property-inclusion: non_null
   webflux:
     multipart:
-      max-headers-size: 100MB
+      max-headers-size: 10MB
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  r2dbc:
+    url: 'r2dbcs:mysql://${dhost}/myblog'
+    username: ${dusername}
+    password: ${dpassword}
+    pool:
+      max-size: 200

@@ -14,22 +14,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Article {
-
+public class Message {
     @Id
     @CreatedBy
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long id;
-
-    private String label;
-
-    private int labelCount;
-
-    private String title;
-
-    private String imgUrl;
-
-    private String digest;
 
     private String content;
 

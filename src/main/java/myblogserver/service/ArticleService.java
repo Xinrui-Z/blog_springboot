@@ -36,7 +36,7 @@ public class ArticleService {
         return articleRepository.findAll((page-1)*pageSize, pageSize).collectList();
     }
 
-    public Mono<Integer> getArticlesCount() {
+    public Mono<Integer> listArticlesCount() {
         return articleRepository.findCount();
     }
 
@@ -47,8 +47,12 @@ public class ArticleService {
                 .then();
     }
 
-    public Mono<Article> getArticle(long aid) {
+    public Mono<Article> getArticleById(long aid) {
         return articleRepository.findById(aid);
+    }
+
+    public Mono<List<Article>> getArticleByLabel(String label) {
+        return articleRepository.findByLabel(label).collectList();
     }
 
     @Transactional
@@ -59,7 +63,7 @@ public class ArticleService {
         )).then(articleRepository.deleteById(aid).then());
     }
 
-    public Mono<List<Article>> getLabelsAndCount() {
+    public Mono<List<Article>> listLabelsAndCount() {
         return articleRepository.findLabelsAndCount().collectList();
     }
 }

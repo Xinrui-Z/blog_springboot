@@ -43,17 +43,6 @@ public class ArticleController {
     }
 
     /**
-     * 根据id获取博客
-     * @param aid
-     * @return
-     */
-    @GetMapping("/article/{aid}")
-    public Mono<ResultVO> getArticle(@PathVariable long aid) {
-        return  articleService.getArticle(aid)
-                .map(article -> ResultVO.success(Map.of("article", article)));
-    }
-
-    /**
      * 根据id删除博客
      * @param aid
      * @return

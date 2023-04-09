@@ -23,6 +23,12 @@ public class AdminController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * 登录
+     * @param user
+     * @param response
+     * @return
+     */
     @PostMapping("/login")
     public Mono<ResultVO> login (@RequestBody User user, ServerHttpResponse response) {
         return userService.getUser(user.getNumber())
@@ -36,18 +42,35 @@ public class AdminController {
                 .defaultIfEmpty(ResultVO.error(ResultVO.UNAUTHORIZED, "用户名密码不匹配！"));
     }
 
+    /**
+     * 获取admin信息
+     * @param uid
+     * @return
+     */
     @GetMapping("/info")
     public Mono<ResultVO> getInfo(@RequestAttribute("uid") long uid) {
         return userService.getUser(uid)
                 .flatMap(user -> Mono.just(ResultVO.success(Map.of("user",user))));
     }
 
+    /**
+     * 修改信息
+     * @param user
+     * @param uid
+     * @return
+     */
     @PostMapping("/info")
     public Mono<ResultVO> postInfo(@RequestBody User user,@RequestAttribute("uid") long uid) {
         return userService.resetInfo(user, uid)
                 .then(Mono.just(ResultVO.success("修改成功！")));
     }
 
+    /**
+     * 重置密码
+     * @param pwd
+     * @param uid
+     * @return
+     */
     @PutMapping("/password/{pwd}")
     public Mono<ResultVO> putPassword(@PathVariable String pwd, @RequestAttribute("uid") long uid) {
         return userService.resetPassword(pwd, uid)
