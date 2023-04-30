@@ -14,7 +14,7 @@ on:
   pull_request:
     branches: [ "master" ]
 env: 
-  path: /root/workspace/myblog/openjdk/my-blog-server-0.0.1-SNAPSHOT.jar
+  path: /root/workspace/myblog/openjdk
 
 jobs:
   build:
