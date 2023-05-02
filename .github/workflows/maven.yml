@@ -14,7 +14,7 @@ on:
   pull_request:
     branches: [ "master" ]
 env: 
-  path: /root/workspace/myblog/openjdk
+  path: /root/workspace/myblog/openjdk/
 
 jobs:
   build:
@@ -27,8 +27,8 @@ jobs:
       uses: actions/setup-java@v3
       with:
         java-version: '17'
-        distribution: 'temurin'
         cache: maven
+
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
@@ -41,13 +41,12 @@ jobs:
         envs: path
         script: rm -rf ${{ env.path }}*
         
-    - name: copy file
+    - name: Deploy to server
       uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        source: "target/my-blog-server-0.0.1-SNAPSHOT.jar"
-        envs: path
+        source: "./target/my-blog-server-0.0.1-SNAPSHOT.jar"
         target: ${{ env.path }}
-        strip_components: 1
+        strip_components: 2
