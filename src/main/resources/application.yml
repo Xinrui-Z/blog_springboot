@@ -19,6 +19,21 @@ spring:
   webflux:
     multipart:
       max-headers-size: 10MB
+
+logging:
+  level:
+    root: info
+    com:
+      example: debug
+    org:
+      springframework:
+        r2dbc: debug
+  pattern:
+    console: '%-5level %C.%M[%line] - %msg%n'
+
+my:
+  file: D:\test\
+
 ---
 spring:
   config:
@@ -30,3 +45,5 @@ spring:
     password: ${dpassword}
     pool:
       max-size: 200
+my:
+  file: ${file}
