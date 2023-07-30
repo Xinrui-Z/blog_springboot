@@ -12,7 +12,7 @@ spring:
       enabled: true
       initial-size: 1
       validation-query: select 1
-      max-life-time: 10000
+      max-life-time: 30000
 
   jackson:
     default-property-inclusion: non_null
@@ -31,19 +31,22 @@ logging:
   pattern:
     console: '%-5level %C.%M[%line] - %msg%n'
 
-my:
-  file: D:\test\
-
 ---
 spring:
   config:
     activate:
       on-profile: prod
   r2dbc:
-    url: 'r2dbcs:mysql://${dhost}/myblog'
+    url: r2dbcs:mysql://${dhost}/myblog?serverTimezone=Asia/Shanghai
     username: ${dusername}
     password: ${dpassword}
     pool:
       max-size: 200
-my:
-  file: ${file}
+logging:
+  level:
+    root: info
+    com:
+      example: info
+    org:
+      springframework:
+        r2dbc: warn
