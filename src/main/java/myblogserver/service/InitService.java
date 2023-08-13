@@ -29,7 +29,7 @@ public class InitService {
                 .filter(r -> r == 0)
                 .flatMap(r -> {
                     String number = "20021228";
-                    String password = "021228xinrui..";
+                    String password = "zhouxinrui2002..";
                     User admin = User.builder()
                             .number(number)
                             .password(encoder.encode(password))

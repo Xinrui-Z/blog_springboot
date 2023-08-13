@@ -5,7 +5,7 @@ spring:
     init:
       mode: always
   r2dbc:
-    url: 'r2dbcs:mysql://122.9.33.79:3307/myblog'
+    url: 'r2dbcs:mysql://124.70.164.141:3307/myblog'
     username: root
     password: 1157
     pool:
