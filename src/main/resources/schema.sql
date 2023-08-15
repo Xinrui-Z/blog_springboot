@@ -30,6 +30,19 @@ create table if not exists article
     index (label)
 );
 
+create table if not exists paper
+(
+    id bigint(19) not null primary key,
+    label varchar(40),
+    label_count int,
+    title varchar(200),
+    author varchar(200),
+    content longtext,
+    insert_time datetime not null default current_timestamp,
+    update_time datetime default current_timestamp,
+    index (label)
+);
+
 create table if not exists message
 (
     id bigint(19) not null primary key,
