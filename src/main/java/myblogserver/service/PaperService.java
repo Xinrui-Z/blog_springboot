@@ -48,9 +48,6 @@ public class PaperService {
         return paperRepository.findById(aid);
     }
 
-    public Mono<List<Paper>> getPaperByLabel(String label) {
-        return paperRepository.findByLabel(label).collectList();
-    }
 
     @Transactional
     public Mono<Void> deletePaper(long aid) {
@@ -62,5 +59,10 @@ public class PaperService {
 
     public Mono<List<Paper>> listLabelsAndCount() {
         return paperRepository.findLabelsAndCount().collectList();
+    }
+
+    public Mono<List<Paper>> getPaperByLabel(String label) {
+        // 在这里根据标签从数据库查询相关数据
+        return paperRepository.findByLabel(label).collectList();
     }
 }

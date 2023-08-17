@@ -1,13 +1,17 @@
 package myblogserver.controller;
 
+import myblogserver.entity.Article;
 import myblogserver.entity.Paper;
 import myblogserver.service.PaperService;
 import myblogserver.utils.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/paper")
@@ -49,6 +53,12 @@ public class PaperController {
     public Mono<ResultVO> deletePaper(@PathVariable long aid) {
         return paperService.deletePaper(aid)
                 .then(Mono.just(ResultVO.success("删除成功！")));
+    }
+
+    @PostMapping("/tagsPaper/{label}")
+    public Mono<ResponseEntity<List<Paper>>> getPaperByLabel(@PathVariable String label) {
+        Mono<List<Paper>> papers = paperService.getPaperByLabel(label);
+        return papers.map(ResponseEntity::ok);
     }
 
 }
