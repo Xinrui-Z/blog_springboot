@@ -33,8 +33,8 @@ public interface PaperRepository extends ReactiveCrudRepository<Paper, Long> {
     Mono<Integer> findCount();
 
     @Modifying
-    @Query("update paper a set a.label=:label, a.title=:title, a.author=:author, a.content=:content where a.id=:aid")
-    Mono<Integer> updatePaperById(String label, String title, String author, String content, long aid);
+    @Query("update paper a set a.label=:label, a.title=:title, a.author=:author, a.soource=:source, a.content=:content where a.id=:aid")
+    Mono<Integer> updatePaperById(String label, String title, String author, String source, String content, long aid);
 
     @Modifying
     @Query("update paper a set a.label_count=:count where a.label=:label")

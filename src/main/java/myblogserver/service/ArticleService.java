@@ -56,6 +56,11 @@ public class ArticleService {
         return articleRepository.findByLabel(label).collectList();
     }
 
+    public Mono<List<Article>> getUser(String label) {
+        return articleRepository.findByLabel(label).collectList();
+    }
+
+
     @Transactional
     public Mono<Void> deleteArticle(long aid) {
         Mono<Article> articleM = articleRepository.findById(aid);

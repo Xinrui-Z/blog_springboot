@@ -42,7 +42,7 @@ public class PaperService {
     }
 
     public Mono<Void> resetPaper(Paper paper) {
-        return paperRepository.updatePaperById(paper.getLabel(), paper.getTitle(), paper.getAuthor(),paper.getContent(), paper.getId())
+        return paperRepository.updatePaperById(paper.getLabel(), paper.getTitle(), paper.getAuthor(),paper.getContent(), paper.getSource(),paper.getId())
                 .filter(u -> u != 0)
                 .switchIfEmpty(Mono.error(new XException(ResultVO.BAD_REQUEST, "修改失败，请稍后再试")))
                 .then();
@@ -68,8 +68,4 @@ public class PaperService {
         return paperRepository.findLabelsAndCount().collectList();
     }
 
-//    public Mono<List<Paper>> getPaperByTag(String label) {
-//        // 在这里根据标签从数据库查询相关数据
-//        return paperRepository.findByLabel(label).collectList();
-//    }
 }

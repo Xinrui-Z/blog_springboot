@@ -88,7 +88,7 @@ public class FrontController {
      */
     @GetMapping("/about/{label}")
     public Mono<ResultVO> getArticles(@PathVariable String label) {
-        return articleService.getArticleByLabel(label)
+        return articleService.getUser(label)
                 .flatMap(articles -> Mono.just(ResultVO.success(Map.of("articles", articles))));
     }
 

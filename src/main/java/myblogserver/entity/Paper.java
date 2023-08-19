@@ -29,6 +29,8 @@ public class Paper {
 
     private String author;
 
+    private String source;
+
     private String content;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
