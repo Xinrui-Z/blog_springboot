@@ -37,6 +37,7 @@ create table if not exists paper
     label_count int,
     title varchar(200),
     author varchar(200),
+    source varchar(200),
     content longtext,
     insert_time datetime not null default current_timestamp,
     update_time datetime default current_timestamp,

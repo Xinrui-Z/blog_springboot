@@ -42,7 +42,7 @@ public class PaperService {
     }
 
     public Mono<Void> resetPaper(Paper paper) {
-        return paperRepository.updatePaperById(paper.getLabel(), paper.getTitle(), paper.getAuthor(),paper.getContent(), paper.getSource(),paper.getId())
+        return paperRepository.updatePaperById(paper.getLabel(), paper.getTitle(), paper.getAuthor(),paper.getSource(),paper.getContent(),paper.getId())
                 .filter(u -> u != 0)
                 .switchIfEmpty(Mono.error(new XException(ResultVO.BAD_REQUEST, "修改失败，请稍后再试")))
                 .then();
