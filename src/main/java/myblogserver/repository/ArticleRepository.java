@@ -1,6 +1,7 @@
 package myblogserver.repository;
 
 import myblogserver.entity.Article;
+import myblogserver.entity.Paper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.r2dbc.repository.Modifying;
 import org.springframework.data.r2dbc.repository.Query;

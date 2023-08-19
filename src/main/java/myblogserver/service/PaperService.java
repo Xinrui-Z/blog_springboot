@@ -1,10 +1,14 @@
 package myblogserver.service;
 
 import myblogserver.entity.Paper;
+import myblogserver.entity.Paper;
 import myblogserver.exception.XException;
 import myblogserver.repository.PaperRepository;
 import myblogserver.utils.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
@@ -19,18 +23,18 @@ public class PaperService {
 
     public Mono<Paper> addPaper(Paper paper) {
         Mono<Paper> paperM = paperRepository.findFirstByLabel(paper.getLabel());
-       return paperRepository.findCountByLabel(paper.getLabel())
-               .filter(r -> r != 0)
-               .flatMap(r -> paperM.flatMap(a -> paperRepository.updateLabelCountByLabel(paper.getLabel(), a.getLabelCount()+1)))
-               .flatMap(r -> paperM.flatMap(a -> {
-                   paper.setLabelCount(a.getLabelCount());
-                   return paperRepository.save(paper);
-               }))
-               .switchIfEmpty(paperRepository.save(paper));
+        return paperRepository.findCountByLabel(paper.getLabel())
+                .filter(r -> r != 0)
+                .flatMap(r -> paperM.flatMap(a -> paperRepository.updateLabelCountByLabel(paper.getLabel(), a.getLabelCount() + 1)))
+                .flatMap(r -> paperM.flatMap(a -> {
+                    paper.setLabelCount(a.getLabelCount());
+                    return paperRepository.save(paper);
+                }))
+                .switchIfEmpty(paperRepository.save(paper));
     }
 
     public Mono<List<Paper>> listPapers(int page, int pageSize) {
-        return paperRepository.findAll((page-1)*pageSize, pageSize).collectList();
+        return paperRepository.findAll((page - 1) * pageSize, pageSize).collectList();
     }
 
     public Mono<Integer> listPapersCount() {
@@ -38,7 +42,7 @@ public class PaperService {
     }
 
     public Mono<Void> resetPaper(Paper paper) {
-        return paperRepository.updatePaperById(paper.getLabel(), paper.getTitle(), paper.getAuthor(), paper.getContent(), paper.getId())
+        return paperRepository.updatePaperById(paper.getLabel(), paper.getTitle(), paper.getAuthor(),paper.getContent(), paper.getId())
                 .filter(u -> u != 0)
                 .switchIfEmpty(Mono.error(new XException(ResultVO.BAD_REQUEST, "修改失败，请稍后再试")))
                 .then();
@@ -56,11 +60,16 @@ public class PaperService {
     public Mono<Void> deletePaper(long aid) {
         Mono<Paper> paperM = paperRepository.findById(aid);
         return paperM.flatMap(paper -> paperRepository.updateLabelCountByLabel(
-                paper.getLabel(), paper.getLabelCount()-1
+                paper.getLabel(), paper.getLabelCount() - 1
         )).then(paperRepository.deleteById(aid).then());
     }
 
     public Mono<List<Paper>> listLabelsAndCount() {
         return paperRepository.findLabelsAndCount().collectList();
     }
+
+//    public Mono<List<Paper>> getPaperByTag(String label) {
+//        // 在这里根据标签从数据库查询相关数据
+//        return paperRepository.findByLabel(label).collectList();
+//    }
 }

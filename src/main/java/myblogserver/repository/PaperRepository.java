@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 
 @Repository
 public interface PaperRepository extends ReactiveCrudRepository<Paper, Long> {
@@ -17,6 +19,7 @@ public interface PaperRepository extends ReactiveCrudRepository<Paper, Long> {
     Mono<Paper> findById(long aid);
 
     Flux<Paper> findByLabel(String label);
+
 
     Mono<Paper> findFirstByLabel(String label);
 
@@ -42,5 +45,6 @@ public interface PaperRepository extends ReactiveCrudRepository<Paper, Long> {
 
     @Query("select distinct label, label_count from paper")
     Flux<Paper> findLabelsAndCount();
+
 
 }

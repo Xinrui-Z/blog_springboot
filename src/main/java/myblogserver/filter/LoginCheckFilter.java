@@ -34,7 +34,7 @@ public class LoginCheckFilter implements WebFilter {
             boolean match = PATH_MATCHER.match(url, path);
             if(match) {
                 return chain.filter(exchange);
-            } else if (path.contains("/api/front")) {
+            } else if (path.contains("/api/front/")) {
                 return chain.filter(exchange);
             }
         }
