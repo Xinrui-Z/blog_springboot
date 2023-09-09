@@ -11,7 +11,7 @@
 
 部署：docker
 
-前端：Vue 3.2 + TypeScript + Vite + Pinia + Element-Plus（[源码](https://github.com/Xinrui-Z/blog_springboot)）
+前端：Vue 3.2 + TypeScript + Vite + Pinia + Element-Plus（[源码](https://github.com/Xinrui-Z/blog_vue)）
 
 后端：Springboot + Webflux + Spring Security
 
